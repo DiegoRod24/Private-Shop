@@ -3,6 +3,7 @@
 const products=()=>window.P||[];
 const byId=id=>products().find(p=>p.id===id);
 const byName=name=>products().find(p=>p.name===name);
+const setText=(el,text)=>{if(el&&el.textContent!==text)el.textContent=text};
 const makeImg=p=>{const img=document.createElement('img');img.className='realProductImg';img.src=p.image;img.alt=p.name;img.loading='lazy';img.referrerPolicy='no-referrer';img.dataset.productId=p.id;img.onerror=()=>{const host=img.parentElement;if(host)host.classList.add('noPhoto')};img.onload=()=>{const host=img.parentElement;if(host)host.classList.remove('noPhoto')};return img};
 function setPhoto(host,p,mode='normal'){
  if(!host||!p||!p.image)return;
@@ -23,21 +24,20 @@ function enhanceDetail(){
  const old=body.querySelector('.realSource');if(old)old.remove();
 }
 function enhanceVisual(){
- const name=document.querySelector('#visualName')?.textContent?.trim(),p=byName(name);if(!p)return;const art=document.querySelector('#visualArt');setPhoto(art,p);
- const info=document.querySelector('.visualInfo');if(info&&!info.querySelector('.brandProduct')){const b=document.createElement('span');b.className='brandProduct';b.textContent=p.brand;info.prepend(b)}else if(info?.querySelector('.brandProduct'))info.querySelector('.brandProduct').textContent=p.brand;
- document.querySelectorAll('#visualThumbs .thumb').forEach((thumb,i)=>{const item=(window.P||[]).find(x=>x.name===document.querySelectorAll('#visualThumbs .thumb')[i]?.dataset.name);if(item&&item.image&&!thumb.querySelector('img')){thumb.classList.add('realThumb');const img=document.createElement('img');img.src=item.image;img.alt=item.name;img.loading='lazy';img.referrerPolicy='no-referrer';thumb.textContent='';thumb.appendChild(img)}})
+ const name=document.querySelector('#visualName')?.textContent?.trim(),p=byName(name);if(!p)return;setPhoto(document.querySelector('#visualArt'),p);
+ const info=document.querySelector('.visualInfo');if(info&&!info.querySelector('.brandProduct')){const b=document.createElement('span');b.className='brandProduct';b.textContent=p.brand;info.prepend(b)}else if(info?.querySelector('.brandProduct'))setText(info.querySelector('.brandProduct'),p.brand);
 }
 function enhanceHero(){document.querySelectorAll('.hero .mini').forEach(m=>{const p=byName(m.querySelector('strong')?.textContent?.trim());if(p)setPhoto(m.querySelector('.miniArt'),p)})}
 function productionCopy(){
- document.title='VELORA Private Shop';
- const meta=document.querySelector('meta[name="description"]');if(meta)meta.content='VELORA Private Shop — bienestar íntimo, compra privada, bolsa visual y recojo en tienda.';
- document.querySelectorAll('.brandText small').forEach(el=>{if(/V3|V4|REAL|DEMO/i.test(el.textContent))el.textContent='PRIVATE SHOP'});
- const stat=[...document.querySelectorAll('.stats div')][0];if(stat){const b=stat.querySelector('b'),s=stat.querySelector('span');if(b)b.textContent='Marcas';if(s)s.textContent='seleccionadas'}
- const footer=document.querySelector('footer>span');if(footer)footer.textContent='Bienestar íntimo · compra privada · recojo en tienda.';
- const collection=document.querySelector('.collection');if(collection){const eye=collection.querySelector('.eye'),h=collection.querySelector('h2'),p=collection.querySelector('p'),btn=collection.querySelector('#demoVisual');if(eye)eye.textContent='TU SELECCIÓN, A TU MANERA';if(h)h.textContent='Mira antes de recoger.';if(p)p.textContent='Guarda lo que te interesa y revisa cada artículo en una vista visual antes de generar tu código de recojo.';if(btn){const n=btn.cloneNode(true);n.id='shopVisual';n.textContent='Explorar productos →';btn.replaceWith(n);n.onclick=()=>{location.hash='#catalogo'}}}
- const share=document.querySelector('.share>small');if(share)share.textContent='Disponibilidad y precio se confirman al reservar.';
- const footNotes=document.querySelectorAll('.bagFoot p');footNotes.forEach(p=>p.textContent='Pago al recoger. Disponibilidad y precio se confirman al reservar.');
- document.querySelectorAll('*').forEach(el=>{if(el.children.length===0&&el.textContent){el.textContent=el.textContent.replace(/VL-DEMO-/g,'VL-').replace(/Total referencial/g,'Total')}})
+ if(document.title!=='VELORA Private Shop')document.title='VELORA Private Shop';
+ const meta=document.querySelector('meta[name="description"]');const desc='VELORA Private Shop — bienestar íntimo, compra privada, bolsa visual y recojo en tienda.';if(meta&&meta.content!==desc)meta.content=desc;
+ document.querySelectorAll('.brandText small').forEach(el=>{if(/V3|V4|REAL|DEMO/i.test(el.textContent))setText(el,'PRIVATE SHOP')});
+ const stat=[...document.querySelectorAll('.stats div')][0];if(stat){setText(stat.querySelector('b'),'Marcas');setText(stat.querySelector('span'),'seleccionadas')}
+ setText(document.querySelector('footer>span'),'Bienestar íntimo · compra privada · recojo en tienda.');
+ const collection=document.querySelector('.collection');if(collection){setText(collection.querySelector('.eye'),'TU SELECCIÓN, A TU MANERA');setText(collection.querySelector('h2'),'Mira antes de recoger.');setText(collection.querySelector('p'),'Guarda lo que te interesa y revisa cada artículo en una vista visual antes de generar tu código de recojo.');const btn=collection.querySelector('#demoVisual');if(btn){const n=btn.cloneNode(true);n.id='shopVisual';n.textContent='Explorar productos →';btn.replaceWith(n);n.onclick=()=>{location.hash='#catalogo'}}}
+ setText(document.querySelector('.share>small'),'Disponibilidad y precio se confirman al reservar.');
+ document.querySelectorAll('.bagFoot p').forEach(p=>setText(p,'Pago al recoger. Disponibilidad y precio se confirman al reservar.'));
+ document.querySelectorAll('*').forEach(el=>{if(el.children.length===0&&el.textContent){const next=el.textContent.replace(/VL-DEMO-/g,'VL-').replace(/Total referencial/g,'Total');if(next!==el.textContent)el.textContent=next}})
 }
 function addBrandRail(){
  if(document.querySelector('.brandRail'))return;const stats=document.querySelector('.stats');if(!stats)return;
