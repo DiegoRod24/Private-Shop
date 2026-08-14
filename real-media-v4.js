@@ -17,7 +17,11 @@ function enhanceCards(){
  document.querySelectorAll('.art[data-detail]').forEach(art=>{const p=byId(art.dataset.detail);if(p)setPhoto(art,p,'card')});
  document.querySelectorAll('.card').forEach(card=>{const id=card.querySelector('[data-detail]')?.dataset.detail,p=byId(id);if(!p)return;const info=card.querySelector('.info');if(info&&!info.querySelector('.brandProduct')){const s=document.createElement('span');s.className='brandProduct';s.textContent=p.brand;info.prepend(s)}});
 }
-function enhanceBag(){document.querySelectorAll('.bag .line').forEach(line=>{const p=byName(line.querySelector('.lineInfo b')?.textContent?.trim());if(p)setPhoto(line.querySelector('.lineArt'),p)})}
+function enhanceBag(){
+ document.querySelectorAll('.bag .line').forEach(line=>{const p=byName(line.querySelector('.lineInfo b')?.textContent?.trim());if(p)setPhoto(line.querySelector('.lineArt'),p)});
+ const quick=document.querySelector('#bagShareQuick');if(quick)quick.remove();
+ const actions=document.querySelector('.bagActions');if(actions){actions.style.gridTemplateColumns='1fr 1.2fr';const prepare=actions.querySelector('#prepare');if(prepare)prepare.style.gridColumn='auto'}
+}
 function enhanceDetail(){
  const body=document.querySelector('#detailBody');if(!body)return;const p=byName(body.querySelector('h2')?.textContent?.trim());if(!p)return;setPhoto(body.querySelector('.detailArt'),p);
  const tags=body.querySelector('.detailTags');if(tags&&!tags.querySelector('.realTag')){const t=document.createElement('span');t.className='realTag';t.textContent='Marca · '+p.brand;tags.prepend(t)}
