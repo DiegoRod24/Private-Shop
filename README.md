@@ -1,65 +1,33 @@
-# VELORA — Private Shop
+# VELORA — Private Shop V2
 
-PWA móvil-first creada como prototipo funcional de una tienda privada con:
+Demo mobile-first de una tienda de bienestar íntimo para adultos.
 
-- Catálogo responsive y tarjetas con sensación 3D.
-- Filtros, búsqueda y favoritos.
-- Bolsa persistente en `localStorage`.
-- Reserva para **recojo y pago en tienda**.
-- Código de recojo + QR.
-- Link compartible que reconstruye la bolsa en otro dispositivo.
-- Asistente virtual "Vela".
-- Entrada por voz cuando el navegador soporta Web Speech API.
-- Instalación como PWA en navegadores compatibles.
-- Diseño adaptado a celular, tablet y desktop.
+## Esta versión incluye
 
-## Ejecutar en local
+- Entrada +18.
+- Catálogo por categorías: Vibradores, Pareja, Anillos, Lubricantes, Masaje, Preservativos, Accesorios, Kits, Lencería y Cuidado.
+- Buscador y filtros.
+- Favoritos.
+- Bolsa persistente en el navegador.
+- Cantidades y total referencial.
+- Código de recojo.
+- QR y link compartible.
+- Asistente virtual ROD.
+- Recojo y pago presencial en tienda.
+- Diseño responsive para celular, tablet y escritorio.
 
-```bash
-npm install
-npm run dev
-```
+## Prueba local
 
-## Compilar
-
-```bash
-npm run build
-```
-
-La salida queda en:
-
-```text
-dist/
-```
-
-## GitHub
-
-```bash
-git init
-git add .
-git commit -m "VELORA v1"
-git branch -M main
-git remote add origin TU_URL_DE_GITHUB
-git push -u origin main
-```
+El `index.html` de esta V2 es autocontenido y puede abrirse directamente en un navegador moderno.
 
 ## Cloudflare Pages
 
-Conecta el repositorio y usa:
+El repositorio mantiene la configuración Vite existente para que también pueda compilarse en Cloudflare Pages.
 
-- Production branch: `main`
+- Branch: `main`
 - Build command: `npm run build`
-- Build output directory: `dist`
+- Output directory: `dist`
 
-## Nota importante sobre esta V1
+## Estado
 
-La bolsa compartida viaja dentro del propio link. Esto permite probar el flujo completo sin backend.
-
-Para una versión de tienda real, el siguiente salto recomendado es:
-1. Inventario real.
-2. Reservas persistentes.
-3. Estado del pedido: reservado / recogido / cancelado.
-4. Panel de tienda para escanear el QR.
-5. Caducidad de reservas.
-6. Control de stock.
-7. Supabase o Cloudflare D1.
+V2 de demostración. Antes de una operación comercial real se debe conectar inventario, reservas persistentes, caducidad, panel de tienda y base de datos.
