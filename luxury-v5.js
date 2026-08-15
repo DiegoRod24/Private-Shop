@@ -2,14 +2,9 @@
 'use strict';
 const $=s=>document.querySelector(s), $$=s=>[...document.querySelectorAll(s)];
 const products=()=>window.P||[];
+function loadPatch(){if(document.querySelector('link[data-luxury-patch]'))return;const l=document.createElement('link');l.rel='stylesheet';l.href='./styles-luxury-v5-patch.css';l.dataset.luxuryPatch='1';document.head.appendChild(l)}
 function product(id){return products().find(p=>p.id===id)}
-function setEditorialMedia(){
-  $$('[data-product-media]').forEach(host=>{
-    const p=product(host.dataset.productMedia); if(!p||!p.image)return;
-    let img=host.querySelector('img'); if(!img){img=document.createElement('img');host.appendChild(img)}
-    if(img.src!==p.image){img.src=p.image;img.alt=p.name;img.loading='lazy';img.referrerPolicy='no-referrer'}
-  })
-}
+function setEditorialMedia(){$$('[data-product-media]').forEach(host=>{const p=product(host.dataset.productMedia);if(!p||!p.image)return;let img=host.querySelector('img');if(!img){img=document.createElement('img');host.appendChild(img)}if(img.src!==p.image){img.src=p.image;img.alt=p.name;img.loading='lazy';img.referrerPolicy='no-referrer'}})}
 function jumpCategory(cat){location.hash='#catalogo';setTimeout(()=>{const b=$$('[data-cat]').find(x=>x.dataset.cat===cat);if(b)b.click()},90)}
 function categoryLinks(){$$('[data-shopcat]').forEach(el=>el.addEventListener('click',e=>{e.preventDefault();jumpCategory(el.dataset.shopcat)}))}
 function faq(){$$('.faqQ').forEach(q=>q.addEventListener('click',()=>{const item=q.closest('.faqItem');$$('.faqItem.open').filter(x=>x!==item).forEach(x=>x.classList.remove('open'));item.classList.toggle('open')}))}
@@ -20,6 +15,6 @@ function polishDynamicCopy(){let queued=false;const clean=()=>{$$('.bagFoot .tot
 function rodCtas(){$$('[data-open-rod]').forEach(b=>b.addEventListener('click',()=>{$('#heroRod')?.click()}))}
 function catalogHints(){const grid=$('#grid');if(!grid||$('.mobileSwipeHint'))return;const hint=document.createElement('div');hint.className='mobileSwipeHint';hint.innerHTML='<span>Desliza para explorar</span><i>→</i>';grid.parentElement.insertBefore(hint,grid)}
 function accessibility(){$$('.catTile,.moodCard').forEach(el=>{el.tabIndex=0;el.setAttribute('role','button');el.addEventListener('keydown',e=>{if(e.key==='Enter'||e.key===' '){e.preventDefault();el.click()}})})}
-function init(){setEditorialMedia();categoryLinks();faq();header();mobileMenu();reveal();polishDynamicCopy();rodCtas();catalogHints();accessibility();setTimeout(setEditorialMedia,500)}
+function init(){loadPatch();setEditorialMedia();categoryLinks();faq();header();mobileMenu();reveal();polishDynamicCopy();rodCtas();catalogHints();accessibility();setTimeout(setEditorialMedia,500)}
 if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',init);else init();
 })();
